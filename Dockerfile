@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 FROM continuumio/miniconda3
-MAINTAINER Krishna Manoj
+MAINTAINER Pavan
 
 EXPOSE 8000
 
