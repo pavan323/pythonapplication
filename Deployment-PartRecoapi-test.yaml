@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment 
+metadata: 
+  name: partrecoapi-test-deployment
+spec: 
+  selector: 
+    matchLabels: 
+      app: partrecoapi-test
+  replicas: 1
+  template:
+    metadata: 
+      labels: 
+        app: partrecoapi-test
+    spec: 
+      containers: 
+      - name: partrecoapi-test
+        image: ebdevseracrpartrecoeng.azurecr.io/partrecoapi:#{Build.BuildId}#
+        ports: 
+        - containerPort: 8000
+--- 
+kind: Service 
+apiVersion: v1 
+metadata: 
+  name: partrecoapi-test
+spec: 
+  selector:
+    app: partrecoapi-test
+  ports: 
+  - port: 80 
+    targetPort: 8000
+  type: LoadBalancer
+

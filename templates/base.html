@@ -1,0 +1,78 @@
+<!-- templates/base.html -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="shortcut icon" type="text/css" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="Pragma" content="no-cache" />
+    <title>Auth Example</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+
+        $(document).ready(function(){
+            $("#logout").click(function(){
+                var username = $("#logout").attr('value');
+
+            $.ajax({ url: "/logout/"+username, method: "DELETE" })
+            .then(function (data) {
+                window.location = '/'
+            })
+            .catch(function (err) {
+                alert('No User found, Please reload the Page')
+            });
+            });
+        });
+    </script>
+</head>
+
+
+<body>
+    <section class="hero is-primary is-fullheight">
+
+        <div class="hero-head">
+            <nav class="navbar">
+                <div class="container">
+					{% if user in session.keys() %}
+					{% endif %}
+                    <div id="navbarMenuHeroA" class="navbar-menu">
+                        
+                        <div class="navbar-end">
+							{% if user not in session.keys() %}
+                            <a href="{{ url_for('index') }}" class="navbar-item">
+                                Home
+                            </a>
+							<a href="{{ url_for('login') }}" class="navbar-item">
+                                Login
+                            </a>
+							<a href="{{ url_for('register') }}" class="navbar-item">
+                                Register
+                            </a>
+							{% endif %}
+                            {% if user in session.keys() %}
+							<a href="{{ url_for('welcome',user=user) }}" class="navbar-item">
+                                Home
+                            </a>
+							<a id='logout' class="navbar-item" value={{ user }}>Logout</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="hero-body">
+            <div class="container has-text-centered">
+               {% block content %}
+               {% endblock %}
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

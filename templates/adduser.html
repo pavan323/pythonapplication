@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column is-4 is-offset-4">
+    <h3 class="title">Add User</h3>
+    <div class="box">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% if messages[0] == 'User has been added successfully' %}
+            <div class="notification is-success">
+                {{ messages[0] }}
+            </div>
+            {% else %}
+
+            <div class="notification is-danger">
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+        {% endif %}
+        {% endwith %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+
+        <form method="POST" name="myform" action="/register" onsubmit="">
+            <div class="field">
+                <div class="control">
+                    <input id ="cc" class="input is-large" type="username" name="username" placeholder="User Name" autofocus="">
+                    
+                   
+                </div>
+                </div>
+
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="email" name="email" placeholder="User Email" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="password" name="password" placeholder="Password">
+                </div>
+            </div>
+            
+            <button class="button is-block is-info is-large is-fullwidth">Add User</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
